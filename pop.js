@@ -38,7 +38,19 @@
 // debug();
 // loadHeader();
 
-chrome.storage.sync.set({ "whitelist": { "www.facebook.com": true } });
+// chrome.storage.sync.set({ "whitelist": { "www.facebook.com": true } });
+// chrome.storage.sync.get(["whitelist"], (result) => {
+//     console.log(result.whitelist);
+// });
+
+var whitelist;
+// alert("white");
 chrome.storage.sync.get(["whitelist"], (result) => {
     console.log(result.whitelist);
+    whitelist = result.whitelist;
+
+    whitelist["www.facebook.com"] = true;
+
+    chrome.storage.sync.set({ "whitelist": whitelist });
+
 });
