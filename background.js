@@ -1,12 +1,7 @@
-var popHTML = "chrome-extension://" + chrome.runtime.id + "/pop.html";
-var popJS = "chrome-extension://" + chrome.runtime.id + "/pop.js";
+var whitelist = {};
+whitelist[chrome.runtime.id] = true;
 
-console.log(popJS);
-var whitelist = {
-    popHTML: true,
-    popJS: true
-};
-
+console.log(whitelist);
 chrome.storage.onChanged.addListener((changes, areaName) => {
     console.log(changes);
     if (changes["whitelist"] != undefined) {
@@ -19,14 +14,14 @@ chrome.storage.sync.get(["whitelist"], (result) => {
 });
 
 chrome.webRequest.onBeforeRequest.addListener((details) => {
-    console.log(details.url);
-    // console.log(chrome.runtime.id);
     var thisURL = new URL(details.url);
     var hostName = thisURL.host;
-
+    console.log(hostName);
     if (whitelist[hostName] == undefined) {
+        console.log("blocking" + details.url);
         return { cancel: true };
     } else {
+        console.log("good to go" + details.url);
         return { cancel: false };
     }
 },
