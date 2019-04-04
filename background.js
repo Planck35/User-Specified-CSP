@@ -58,7 +58,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
             } else {
                 requests = result.requests;
             }
-            if (requests[hostname] != true) {
+            if (requests[hostName] != true) {
                 requests[hostName] = true;
                 chrome.storage.sync.set({ "requests": requests });
             }

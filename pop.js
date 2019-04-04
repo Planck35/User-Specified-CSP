@@ -44,13 +44,50 @@
 // });
 
 var whitelist;
+var requests;
+
 // alert("white");
-chrome.storage.sync.get(["whitelist"], (result) => {
-    console.log(result.whitelist);
+chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
     whitelist = result.whitelist;
+    blacklist = result.blacklist;
 
-    whitelist["www.facebook.com"] = true;
+    chrome.storage.sync.get(["requests"], (result) => {
+        requests = result.requests;
+        for (var key in requests) {
+            var request = $("<div></div>");
+            var request_url = $("<span></span>");
+            var allow = $("<button>allow</button>");
+            var disallow = $("<button>disallow</button>");
+            request.addClass("request");
+            request_url.text(key).addClass("btn btn-warning btn-sm").css("width", "220px");
+            allow.addClass("btn btn-success btn-sm").css("width", "80px");;
+            disallow.addClass("btn btn-danger btn-sm").css("width", "80px");
+            allow.click(function() {
+                var request = $(this).parent()
+                request.hide()
+                var hostname = request.find("span").text();
+                whitelist[hostname] = true;
+                delete requests[hostname];
+                // save the new whitelist into local storage
+                chrome.storage.sync.set({ "whitelist": whitelist });
+                chrome.storage.sync.set({ "requests": requests });
+            })
+            disallow.click(function() {
+                var request = $(this).parent()
+                request.hide()
+                var hostname = request.find("span").text();
+                blacklist[hostname] = true;
+                delete requests[hostname];
+                // save the new whitelist into local storage
+                chrome.storage.sync.set({ "blacklist": blacklist });
+                chrome.storage.sync.set({ "requests": requests });
+            })
 
-    chrome.storage.sync.set({ "whitelist": whitelist });
-
+            request.append(allow);
+            request.append(request_url);
+            request.append(disallow);
+            $("body").append(request);
+        }
+    });
 });
+

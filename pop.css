@@ -1,0 +1,17 @@
+body {
+  height: 500px;
+  width: 400px;
+}
+
+.request {
+  padding: 5px;
+  transition: 1s;
+}
+
+.request_url {
+  height: 30px;
+  background-color: #6e757c;
+  color: #ffffff;
+  width: 200px;
+  display: inline;
+}
