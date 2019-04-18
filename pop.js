@@ -35,7 +35,7 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
             allow.click(function () {
                 var request = $(this).parent()
                 request.hide()
-                var hostname = request.find("span").text();
+                var hostname = key;
                 whitelist[hostname] = true;
                 delete requests[hostname];
                 // save the new whitelist into local storage
@@ -47,7 +47,7 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
             disallow.click(function () {
                 var request = $(this).parent()
                 request.hide()
-                var hostname = request.find("span").text();
+                var hostname = key;
                 blacklist[hostname] = true;
                 delete requests[hostname];
                 // save the new whitelist into local storage
