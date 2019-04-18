@@ -3,8 +3,8 @@ var blacklist
 
 function addToWL(key){
     let request = $("<tr id='tr_"+ key +"'></tr>");
-    let request_url = $("<td class='keyName'>").text(key);;
-    let btn_delete = $("<td><button>Delete</button></td>")
+    let request_url = $("<td class='keyName align-middle' width='90%'>").text(key);;
+    let btn_delete = $("<td><button class='btn btn-secondary btn-sm' width='10%'>Delete</button></td>")
     btn_delete.click(function () {
         var request = $(this).parent()
         request.hide()
@@ -20,8 +20,8 @@ function addToWL(key){
 
 function addToBL(key){
     let request = $("<tr id='tr_"+ key +"'></tr>");
-    let request_url = $("<td class='keyName'>").text(key);;
-    let btn_delete = $("<td><button>Delete</button></td>")
+    let request_url = $("<td class='keyName align-middle' width='90%'>").text(key);;
+    let btn_delete = $("<td><button class='btn btn-secondary btn-sm' width='10%'>Delete</button></td>")
     btn_delete.click(function () {
         var request = $(this).parent()
         request.hide()

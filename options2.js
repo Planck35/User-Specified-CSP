@@ -4,10 +4,10 @@ var types = ["main_frame", "sub_frame", "stylesheet", "script", "image", "font",
 for (var i = 0; i < types.length; i++) {
     var resource = $("<tr></tr>");
     var btn = $('<td><label class="switch"><input type="checkbox"/><span class="slider round"></span></label></td>');
-    var info = $('<td></td>');
+    var info = $('<td class="align-middle"></td>');
     btn.find("input").attr("id", types[i] + "-checkbox");
     btn.find("input").attr("resource-type", types[i]);
-    info.text("Block " + types[i] + " from unknown domain");
+    info.text(types[i]);
     resource.append(btn);
     resource.append(info);
     $("#resources").append(resource);

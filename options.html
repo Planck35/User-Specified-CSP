@@ -18,7 +18,27 @@
 <body>
 
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" style="color:#ffffff">CSP configuration</a>
+    
+    <div class="navbar-brand container">
+        <div class="row align-items-center">
+            <div class="col">
+                <img width="60px" src="images/favicon.svg">
+            </div>
+            <div class="col">
+                <div class="row" style="margin-top: -8px">
+                    <div class="col" style="color:#e13328;font-size:35px;font-weight:bold">
+                        CSP
+                    </div>
+                </div>
+                <div class="row" style="margin-top: -18px">
+                    <div class="col" >
+                        <span class="badge badge-light" style="font-size:13px">Assistant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,61 +49,85 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="#">Configuration</a>
             </li>
         </ul>
     </div>
+-->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
+        </li>
+    </ul>
 
 </nav>
+
 <div class="container">
-    <h2>Configuration</h2>
     <br>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#pane_listManagement">Black/Whitelist</a>
+            <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#pane_resourceType">Resource Type</a>
+            <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="box box-solid box-primary container tab-pane active" id = "pane_listManagement">
-            <h2>Whitelist</h2>
-            <div class="box-body no-padding">
-                <table class="table directory-table" id="table_wl">
-                    <tbody id="tbody_wl"></tbody>
-                </table>
+        <div id = "pane_domain" class="box box-solid box-primary container tab-pane active" >
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    Whitelist
+                    <form id="form_addToWL" class="float-right">
+                        <input type="text" name="lname" id="input_wlURL" placeholder="domain name" style="height:36px; width:200px;padding:5px" required>
+                        <button id="btn_addToWL" class="btn btn-primary btn-sm" type="submit">add</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="box-body no-padding">
+                        <table class="table directory-table" id="table_wl">
+                            <tbody id="tbody_wl"></tbody>
+                        </table>
+                    </div>
+                    
+                </div>
             </div>
-            <form id="form_addToWL">
-                <label>New URL: </label>
-                <input type="text" name="lname" id="input_wlURL" required>
-                <button id="btn_addToWL" class="btn-primary" type="submit">Add To Whitelist</button>
-            </form>
-            <h2>Blacklist</h2>
-            
-            <div class="box-body no-padding">
-                <table class="table directory-table" id="table_bl">
-                    <tbody id="tbody_bl"></tbody>
-                </table>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    Blacklist
+                    <form id="form_addToBL" class="float-right">
+                        <input type="text" name="lname" id="input_blURL" placeholder="domain name" style="height:36px; width:200px;padding:5px" required>
+                        <button id="btn_addToBL" class="btn btn-primary btn-sm" type="submit">add</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="box-body no-padding">
+                        <table class="table directory-table" id="table_bl">
+                            <tbody id="tbody_bl"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <form id="form_addToBL">
-                <label>New URL: </label>
-                <input type="text" name="lname"  id="input_blURL" required>
-                <button id="btn_addToBL" class="btn-primary" type="submit">Add To Blacklist</button>
-            </form>
         </div>
-        <div id="pane_resourceType" class="container tab-pane fade">
-            <table class="table options" >
-                <tbody id="resources">
-                </tbody>
-            </table>
+
+        <div id="pane_resource" class="container tab-pane fade">
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    Block these resources from unknown domains
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody id="resources">
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+            
         </div>
     </div>
 
