@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>CSP configuration</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta charset="utf-8">
     <script src="jquery-3.3.1.min.js"></script>
     <script src="bootstrap.min.js"></script>
+    <!--<script src="bootstrap2-toggle.min.js"></script>-->
     <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="options2.css">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
 </head>
 
@@ -36,9 +40,54 @@
         </ul>
     </div>
 
-
 </nav>
+<div class="container">
+    <h2>Configuration</h2>
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#pane_listManagement">Black/Whitelist</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#pane_resourceType">Resource Type</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="box box-solid box-primary container tab-pane active" id = "pane_listManagement">
+            <h2>Whitelist</h2>
+            <div class="box-body no-padding">
+                <table class="table directory-table" id="table_wl">
+                    <tbody id="tbody_wl"></tbody>
+                </table>
+            </div>
+            <form id="form_addToWL">
+                <label>New URL: </label>
+                <input type="text" name="lname" id="input_wlURL" required>
+                <button id="btn_addToWL" class="btn-primary" type="submit">Add To Whitelist</button>
+            </form>
+            <h2>Blacklist</h2>
+            
+            <div class="box-body no-padding">
+                <table class="table directory-table" id="table_bl">
+                    <tbody id="tbody_bl"></tbody>
+                </table>
+            </div>
+            <form id="form_addToBL">
+                <label>New URL: </label>
+                <input type="text" name="lname"  id="input_blURL" required>
+                <button id="btn_addToBL" class="btn-primary" type="submit">Add To Blacklist</button>
+            </form>
+        </div>
+        <div id="pane_resourceType" class="container tab-pane fade">
+            <table class="table options" >
+                <tbody id="resources">
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+</div>
 <!--Favorite color:-->
 <!--<select id="color">-->
     <!--<option value="red">red</option>-->
@@ -54,31 +103,9 @@
 
 <!--<div id="status"></div>-->
 <!--<button id="save">Save</button>-->
-<div class="box box-solid box-primary">
-    white list:
-    <div class="box-body no-padding">
-        <table class="table directory-table" id="table_wl">
-            <tbody id="tbody_wl"></tbody>
-        </table>
-    </div>
-    <form id="form_addToWL">
-        <label>New URL: </label>
-        <input type="text" name="lname" id="input_wlURL" required>
-        <button id="btn_addToWL" class="btn-primary" type="submit">Add To Whitelist</button>
-    </form>
-    
-    black list:
-    <div class="box-body no-padding">
-        <table class="table directory-table" id="table_bl">
-            <tbody id="tbody_bl"></tbody>
-        </table>
-    </div>
-    <form id="form_addToBL">
-        <label>New URL: </label>
-        <input type="text" name="lname"  id="input_blURL" required>
-        <button id="btn_addToBL" class="btn-primary" type="submit">Add To Blacklist</button>
-    </form>
-</div>
+
+
 <script src="options.js"></script>
+<script src="options2.js"></script>
 </body>
 </html>
