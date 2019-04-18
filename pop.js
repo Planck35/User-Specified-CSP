@@ -1,8 +1,8 @@
 var whitelist;
 var requests;
 
-$("#btn_option").click((e)=>{
-    chrome.tabs.create({ 'url': 'chrome-extension://' + chrome.runtime.id + '/options.html'});
+$("#btn_option").click((e) => {
+    chrome.tabs.create({ 'url': 'chrome-extension://' + chrome.runtime.id + '/options.html' });
 })
 
 chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
@@ -14,12 +14,12 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
         for (var key in requests) {
             var request = $("<div></div>");
             var request_url = $("<span></span>");
-            var allow = $("<button>allow</button>");
-            var disallow = $("<button>disallow</button>");
+            var allow = $("<button>load</button>");
+            var disallow = $("<button>block</button>");
             request.addClass("request");
-            request_url.text(key).addClass("btn btn-warning btn-sm").css("width", "220px");
-            allow.addClass("btn btn-success btn-sm").css("width", "80px");;
-            disallow.addClass("btn btn-danger btn-sm").css("width", "80px");
+            request_url.text(key).addClass("btn btn-warning btn-sm col-8");
+            allow.addClass("btn btn-success btn-sm col-2");
+            disallow.addClass("btn btn-danger btn-sm col-2");
             allow.click(function () {
                 var request = $(this).parent()
                 request.hide()
@@ -44,8 +44,8 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
                 chrome.storage.sync.set({ "requests": requests });
             })
 
-            request.append(allow);
             request.append(request_url);
+            request.append(allow);
             request.append(disallow);
             $("body").append(request);
         }
