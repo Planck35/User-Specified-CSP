@@ -13,45 +13,67 @@
 
 <body>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" style="color:#ffffff">CSP configuration</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:#ffffff">CSP configuration</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+    </div>
 
-Favorite color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
 
-<label>
-  <input type="checkbox" id="like">
-  I like colors.
-</label>
+</nav>
 
-<div id="status"></div>
-<button id="save">Save</button>
+<!--Favorite color:-->
+<!--<select id="color">-->
+    <!--<option value="red">red</option>-->
+    <!--<option value="green">green</option>-->
+    <!--<option value="blue">blue</option>-->
+    <!--<option value="yellow">yellow</option>-->
+<!--</select>-->
 
+<!--<label>-->
+    <!--<input type="checkbox" id="like">-->
+    <!--I like colors.-->
+<!--</label>-->
+
+<!--<div id="status"></div>-->
+<!--<button id="save">Save</button>-->
+<div class="box box-solid box-primary">
+    white list:
+    <div class="box-body no-padding">
+        <table class="table directory-table" id="table_wl">
+            <tbody id="tbody_wl"></tbody>
+        </table>
+    </div>
+    <form id="form_addToWL">
+        <input>
+    
+    </form>
+    <button id="btn_addToWL">Add URL To Whitelist</button>
+    black list:
+    <div class="box-body no-padding">
+        <table class="table directory-table" id="table_bl">
+            <tbody id="tbody_bl"></tbody>
+        </table>
+    </div>
+    <button id="btn_addToBL">Add URL To Blacklist</button>
+</div>
 <script src="options.js"></script>
 </body>
 </html>
