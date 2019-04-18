@@ -69,11 +69,11 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
                 chrome.storage.sync.set({ "requests": requests });
             }
         });
-        // if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
-        //     return { cancel: false };
-        // } else {
-        return { cancel: true };
-        // }
+        if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
+            return { cancel: false };
+        } else {
+            return { cancel: true };
+        }
     } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
         // console.log("good to go" + details.url);
         return { cancel: false };
