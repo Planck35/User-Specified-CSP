@@ -69,14 +69,18 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
                 chrome.storage.sync.set({ "requests": requests });
             }
         });
-        // if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
-        //     return { cancel: false };
-        // } else {
+
         return { cancel: true };
         // }
     } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
+        console.log(hostName)
+        console.log(details.type)
+        if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
+            return { cancel: false };
+        } else {
+            return { cancel: true };
+        }
         // console.log("good to go" + details.url);
-        return { cancel: false };
     } else if (blacklist[hostName] != undefined && whitelist[hostName] == undefined) {
         // console.log("Not good to go" + details.url);
         return { cancel: true };
