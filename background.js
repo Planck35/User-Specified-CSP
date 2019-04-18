@@ -21,7 +21,7 @@ chrome.storage.sync.get(["blacklist"], (result) => {
     blacklist = result.blacklist;
 });
 
-
+// chrome.browserAction.setBadgeText({ text: "10+" });
 
 // console.log(whitelist);
 chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -60,6 +60,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
             }
             if (requests[hostName] != true) {
                 requests[hostName] = true;
+                chrome.browserAction.setBadgeText({ text: Object.keys(requests).length.toString() });
                 chrome.storage.sync.set({ "requests": requests });
             }
         });
