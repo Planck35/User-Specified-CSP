@@ -73,11 +73,15 @@ $("#form_addToWL").submit((e)=>{
     let url = $("#input_wlURL").val();
     if(blacklist[url] != undefined || blacklist[url]!=null){
         alert("This url is found in blacklist! Please click the \"move to WL\" button next to the URL");
+    } else if(whitelist[url] != undefined || whitelist[url]!=null) {
+        alert("URL already added!")
     } else {
         whitelist[url] = true;
         chrome.storage.sync.set({ "whitelist": whitelist });
         addToWL(url);
+        $("#input_wlURL").val("")
     }
+
 })
 
 $("#form_addToBL").submit((e)=>{
@@ -85,10 +89,13 @@ $("#form_addToBL").submit((e)=>{
     let url = $("#input_blURL").val();
     if(whitelist[url] != undefined || whitelist[url]!=null){
         alert("This url is found in whitelist! Please click the \"move to BL\" button next to the URL");
+    } else if(blacklist[url] != undefined || blacklist[url]!=null) {
+        alert("URL already added!")
     } else {
         blacklist[url] = true;
         chrome.storage.sync.set({ "blacklist": blacklist});
         addToBL(url);
+        $("#input_blURL").val("")
     }
 })
 
