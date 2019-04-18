@@ -11,15 +11,27 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
 
     chrome.storage.sync.get(["requests"], (result) => {
         requests = result.requests;
+        var list_group = $("<ul></ul>");
+        list_group.addClass("list-group");
         for (var key in requests) {
-            var request = $("<div></div>");
-            var request_url = $("<span></span>");
+            var request = $("<li></li>");
+            request.addClass("list-group-item");
+            request.addClass("list-group-item-action");
+            request.addClass("d-flex");
+            request.addClass("justify-content-between");
+            request.addClass("align-items-center");
+            request.text(key);
+
+            var btn_group = $("<div></div>");
+            btn_group.addClass("btn-group");
+
+            // var request_url = $("<span></span>");
             var allow = $("<button>load</button>");
             var disallow = $("<button>block</button>");
-            request.addClass("request");
-            request_url.text(key).addClass("btn btn-warning btn-sm col-8");
-            allow.addClass("btn btn-success btn-sm col-2");
-            disallow.addClass("btn btn-danger btn-sm col-2");
+            allow.addClass("btn");
+            allow.addClass("btn-outline-success");
+            disallow.addClass("btn");
+            disallow.addClass("btn-outline-danger");
             allow.click(function () {
                 var request = $(this).parent()
                 request.hide()
@@ -43,12 +55,13 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
                 chrome.storage.sync.set({ "blacklist": blacklist });
                 chrome.storage.sync.set({ "requests": requests });
             })
-
-            request.append(request_url);
-            request.append(allow);
-            request.append(disallow);
-            $("body").append(request);
+            btn_group.append(allow);
+            btn_group.append(disallow);
+            request.append(btn_group);
+            // request.append(allow);
+            // request.append(disallow);
+            list_group.append(request);
         }
+        $("body").append(list_group);
     });
 });
-
