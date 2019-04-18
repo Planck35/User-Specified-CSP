@@ -1,6 +1,9 @@
 var whitelist;
 var requests;
 
+$("#btn_option").click((e)=>{
+    chrome.tabs.create({ 'url': 'chrome-extension://' + chrome.runtime.id + '/options.html'});
+})
 
 chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
     whitelist = result.whitelist;
