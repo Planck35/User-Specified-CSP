@@ -69,7 +69,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
                 chrome.storage.sync.set({ "requests": requests });
             }
         });
-        if (blacktype[details.type] == undefined) {
+        if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
             return { cancel: false };
         } else {
             return { cancel: true };
