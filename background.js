@@ -53,7 +53,14 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
 
     var thisURL = new URL(details.url);
     var hostName = thisURL.host;
-    // console.log("load resource type " + details.type + " from host: " + hostName);
+    // console.log("load resource type " + details.type + " from host: " + details.url);
+
+    if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
+
+    } else {
+        return { cancel: true };
+    }
+
     if (whitelist[hostName] == undefined && blacklist[hostName] == undefined) {
         // console.log("blocking" + details.url);
         chrome.storage.sync.get(["requests"], (result) => {
@@ -68,21 +75,13 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
                 chrome.browserAction.setBadgeText({ text: Object.keys(requests).length.toString() });
                 chrome.storage.sync.set({ "requests": requests });
             }
+
         });
-        if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
-            return { cancel: false };
-        } else {
-            return { cancel: true };
-        }
+
+        return { cancel: true };
 
     } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
-        console.log(hostName)
-        console.log(details.type)
-        if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
-            return { cancel: false };
-        } else {
-            return { cancel: true };
-        }
+        return { cancel: false };
         // console.log("good to go" + details.url);
     } else if (blacklist[hostName] != undefined && whitelist[hostName] == undefined) {
         // console.log("Not good to go" + details.url);
