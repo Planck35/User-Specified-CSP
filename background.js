@@ -1,5 +1,7 @@
 var whitelist = {};
 var blacklist = {};
+var blacktype = {};
+
 whitelist[chrome.runtime.id] = true;
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -7,48 +9,51 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.storage.sync.set({ "blacklist": blacklist });
 });
 
-chrome.storage.sync.get(["whitelist"], (result) => {
-    console.log("----");
-    console.log(result.whitelist);
-    console.log("----");
-    whitelist = result.whitelist;
+chrome.storage.sync.get(["whitelist", "blacklist", "blacktype"], (result) => {
+    if (result.whitelist != undefined) {
+        whitelist = result.whitelist;
+    }
+    if (result.blacklist != undefined) {
+        blacklist = result.blacklist;
+    }
+    if (result.blacktype != undefined) {
+        blacktype = result.blacktype;
+    }
 });
 
-chrome.storage.sync.get(["blacklist"], (result) => {
-    console.log("****");
-    console.log(result.blacklist);
-    console.log("****");
-    blacklist = result.blacklist;
-});
+console.log("initial whitelist");
+console.log(whitelist);
+console.log("initial blacklist");
+console.log(blacklist);
+console.log("initial blacktype");
+console.log(blacktype);
 
-// chrome.browserAction.setBadgeText({ text: "10+" });
+whitelist[chrome.runtime.id] = true;
 
-// console.log(whitelist);
 chrome.storage.onChanged.addListener((changes, areaName) => {
-    // console.log(changes);
-
     if (changes["whitelist"] != undefined) {
         chrome.storage.sync.get(["whitelist"], (result) => {
             whitelist = result.whitelist;
         });
     }
-
     if (changes["blacklist"] != undefined) {
         chrome.storage.sync.get(["blacklist"], (result) => {
             blacklist = result.blacklist;
         });
     }
+    if (changes["blacktype"] != undefined) {
+        chrome.storage.sync.get(["blacktype"], (result) => {
+            blacktype = result.blacktype;
+        });
+    }
 });
 
-// chrome.storage.sync.get(["whitelist"], (result) => {
-//     console.log(result.whitelist);
-// });
 
 chrome.webRequest.onBeforeRequest.addListener((details) => {
+
     var thisURL = new URL(details.url);
     var hostName = thisURL.host;
-    // console.log(hostName);
-
+    // console.log("load resource type " + details.type + " from host: " + hostName);
     if (whitelist[hostName] == undefined && blacklist[hostName] == undefined) {
         // console.log("blocking" + details.url);
         chrome.storage.sync.get(["requests"], (result) => {
@@ -64,7 +69,11 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
                 chrome.storage.sync.set({ "requests": requests });
             }
         });
-        return { cancel: true };
+        if (blacktype[details.type] == undefined) {
+            return { cancel: false };
+        } else {
+            return { cancel: true };
+        }
     } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
         // console.log("good to go" + details.url);
         return { cancel: false };
