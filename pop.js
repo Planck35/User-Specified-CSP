@@ -10,13 +10,53 @@ chrome.storage.sync.get(["whitelist", "blacklist", "maliciousRecode"], (result) 
     whitelist = result.whitelist;
     blacklist = result.blacklist;
     maliciousRecode = result.maliciousRecode;
-    if (Object.keys(maliciousRecode).length != 0) {
 
+    if (Object.keys(maliciousRecode).length != 0) {
+        var list_group = $("<ul></ul>");
+        list_group.addClass("list-group");
+        var title = $("<li></li>");
+
+        title.addClass("list-group-item");
+        title.addClass("list-group-item-action");
+        title.css("background-color", "#ef694f");
+        title.append($("<h4>Suspicious webpage detected!</h4>"));
+        title.append($("<p>Below websites is trying to send requests to publicly blacklisted URL. Please close them immediately</p>"))
+        list_group.append(title);
+        var keyArray = Object.keys(maliciousRecode);
+        for (var index = 0; index < keyArray.length; index++) {
+            // console.log(keyArray[index]);
+            const currentIndex = index;
+            chrome.tabs.get(parseInt(keyArray[index]), (tab) => {
+                var item = $("<li></li>");
+                item.addClass("list-group-item");
+                item.addClass("list-group-item-action");
+
+                // console.log("enter herer");
+                var thisURL = new URL(tab.url);
+                var hostName = thisURL.host;
+                item.append($(`<div>${hostName} - visit time: ${maliciousRecode[keyArray[currentIndex]]}</div>`));
+                list_group.append(item);
+                console.log(index);
+                console.log(typeof index);
+                console.log(keyArray.length - 1);
+                if (currentIndex == keyArray.length - 1) {
+                    console.log("add it");
+                    $("body").append(list_group);
+                }
+            });
+        }
     }
     chrome.storage.sync.get(["requests"], (result) => {
         requests = result.requests;
         var list_group = $("<ul></ul>");
         list_group.addClass("list-group");
+        if (requests && Object.keys(requests).length != 0) {
+            var title = $("<li></li>");
+            title.addClass("list-group-item");
+            title.addClass("list-group-item-action");
+            title.append($("<h4>unknown hostname list</h4>"));
+            list_group.append(title);
+        }
         for (var key in requests) {
             var request = $("<li></li>");
             var requestDiv = $("<div></div>");
