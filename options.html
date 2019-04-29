@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head></head>
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>CSP configuration</title>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta charset="utf-8">
@@ -20,49 +17,43 @@
 
 <body>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="navbar-brand container ml-0">
-            <div class="row align-items-center">
-                <div class="col">
-                    <img width="60px" src="images/favicon.svg">
-                </div>
-                <div class="col">
-                    <div class="row" style="margin-top: -8px">
-                        <div class="col"
-                            style="color:#e13328;font-size:35px;font-weight:bold">
-                            CSP
-                        </div>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="navbar-brand container ml-0">
+        <div class="row align-items-center">
+            <div class="col">
+                <img width="60px" src="images/favicon.svg">
+            </div>
+            <div class="col">
+                <div class="row" style="margin-top: -8px">
+                    <div class="col" style="color:#e13328;font-size:35px;font-weight:bold">
+                        CSP
                     </div>
-                    <div class="row" style="margin-top: -18px">
-                        <div class="col">
-                            <span class="badge badge-light"
-                                style="font-size:13px">Assistant</span>
-                        </div>
+                </div>
+                <div class="row" style="margin-top: -18px">
+                    <div class="col" >
+                        <span class="badge badge-light" style="font-size:13px">Assistant</span>
                     </div>
                 </div>
             </div>
-
-            <ul class="nav nav-pills nav-justified flex-column flex-sm-row"
-                role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab"
-                        href="#pane_domain">Domain</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab"
-                        href="#pane_resource">Resource</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab"
-                        href="#pane_mode">Mode</a>
-                </li>
-            </ul>
-
         </div>
 
+        <ul class="nav nav-pills nav-justified flex-column flex-sm-row" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#pane_mode">Mode</a>
+            </li>
+        </ul>
+ 
+    </div>
 
-
-        <!--
+    
+    
+    <!--
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -78,186 +69,157 @@
         </ul>
     </div>
 -->
+    
+    
 
+</nav>
 
-
-    </nav>
-
-    <div class="container">
-        <button type="button" class="btn D-n" data-toggle="modal"
-            data-target="#modal_helpMessage" id="btn_showHelpModal">Open
-            Patients Modal</button>
-        <div class="modal fade D-n" id="modal_helpMessage" role="dialog">
-            <div class="modal-dialog">
-                <!--Modal content-->
-                <div class="modal-content">
-                    <div class="modal-body"
-                        style="text-align: center; margin: auto">
-                        <h2 id="modal-title-type-name"></h2>
-                        <p id="modal-text-help"></p>
+<div class="container">
+    <button type="button" class="btn D-n" data-toggle="modal" data-target="#modal_helpMessage" id="btn_showHelpModal">Open Patients Modal</button>
+    <div class="modal fade D-n" id="modal_helpMessage" role="dialog">
+        <div class="modal-dialog">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-body" >
+                    <h3 id="modal-title-type-name" style="text-align: center; margin: auto"></h3>
+                    <div class="card mt-1 options">
+                        <div class="card-body">
+                            <div class="box-body no-padding">
+                                <p id="modal-text-help"></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer"
-                        style="text-align: center; margin: auto">
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal">OK</button>
-                    </div>
+                    
+                </div>
+                <div class="modal-footer" style="text-align: center; margin: auto">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
-        <div class="tab-content mt-3">
-            <div id="pane_domain"
-                class="box box-solid box-primary container tab-pane active">
-
-                <div class="card mt-3 options">
-                    <div class="card-header">
-                        Whitelist
-                        <form id="form_addToWL" class="float-right">
-                            <input type="text" name="lname" id="input_wlURL"
-                                placeholder="domain name"
-                                style="height:36px; width:200px;padding:5px"
-                                required>
-                            <button id="btn_addToWL"
-                                class="btn btn-primary btn-sm"
-                                type="submit">add</button>
-                        </form>
-                    </div>
-                    <div class="card-body">
-                        <div class="box-body no-padding">
-                            <table class="table directory-table" id="table_wl">
-                                <tbody id="tbody_wl"></tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="card mt-3 options">
-                    <div class="card-header">
-                        Blacklist
-                        <form id="form_addToBL" class="float-right">
-                            <input type="text" name="lname" id="input_blURL"
-                                placeholder="domain name"
-                                style="height:36px; width:200px;padding:5px"
-                                required>
-                            <button id="btn_addToBL"
-                                class="btn btn-primary btn-sm"
-                                type="submit">add</button>
-                        </form>
-                    </div>
-                    <div class="card-body">
-                        <div class="box-body no-padding">
-                            <table class="table directory-table" id="table_bl">
-                                <tbody id="tbody_bl"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="pane_resource" class="container tab-pane fade">
-                <div class="card mt-3 options">
-                    <div class="card-header">
-                        Block these resources from unknown domains
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <tbody id="resources">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="pane_mode" class="container tab-pane fade">
-                <div class="card mt-3 options">
-                    <div class="card-header">
-                        <label class="switch"><input type="checkbox"
-                                id="strict-mode-switch" /><span
-                                class="slider round"></span></label>
-                        <span class="ml-3">Strict mode</span>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td width="80%">Interact with whitelisted
-                                        domains</td>
-                                    <td width="20%" class="align-middle"><span
-                                            class="badge badge-success">Allowed</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td width="80%">Interact with unknown
-                                        domains</td>
-                                    <td width="20%" class="align-middle"><span
-                                            id="desc_unknown"
-                                            class="badge badge-warning">Ask
-                                            you</span></td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td width="80%">Interact with blacklisted
-                                        domains</td>
-                                    <td width="20%" class="align-middle"><span
-                                            class="badge badge-danger">Blocked</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card mt-3 options">
-                    <div class="card-header">
-                        <label class="switch"><input type="checkbox"
-                                id="ad-filter-switch" /><span
-                                class="slider round"></span></label>
-                        <span class="ml-3">Adblock mode</span>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td width="80%">Load advertisement from
-                                        domains in our ad block list</td>
-                                    <td width="20%" class="align-middle"><span
-                                            id="desc_ad"
-                                            class="badge badge-success">Allowed</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
-    <!--Favorite color:-->
-    <!--<select id="color">-->
+    <div class="tab-content mt-3">
+        <div id = "pane_domain" class="box box-solid box-primary container tab-pane active" >
+
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    Whitelist
+                    <form id="form_addToWL" class="float-right">
+                        <input type="text" name="lname" id="input_wlURL" placeholder="domain name" style="height:36px; width:200px;padding:5px" required>
+                        <button id="btn_addToWL" class="btn btn-primary btn-sm" type="submit">add</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="box-body no-padding">
+                        <table class="table directory-table" id="table_wl">
+                            <tbody id="tbody_wl"></tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    Blacklist
+                    <form id="form_addToBL" class="float-right">
+                        <input type="text" name="lname" id="input_blURL" placeholder="domain name" style="height:36px; width:200px;padding:5px" required>
+                        <button id="btn_addToBL" class="btn btn-primary btn-sm" type="submit">add</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="box-body no-padding">
+                        <table class="table directory-table" id="table_bl">
+                            <tbody id="tbody_bl"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pane_resource" class="container tab-pane fade">
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    Block these resources from unknown domains
+                    <button id="save-type-setting" class="btn btn-primary btn-sm float-right">Save</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody id="resources">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="pane_mode" class="container tab-pane fade">
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    <label class="switch"><input type="checkbox" id="strict-mode-switch"/><span class="slider round"></span></label>
+                    <span class="ml-3">Strict mode</span>
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with whitelisted domains</td>
+                                <td width="20%" class="align-middle"><span class="badge badge-success">Allowed</span></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with unknown domains</td>
+                                <td width="20%" class="align-middle"><span id="desc_unknown" class="badge badge-warning">Ask you</span></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with blacklisted domains</td>
+                                <td width="20%" class="align-middle"><span class="badge badge-danger">Blocked</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+            
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    <label class="switch"><input type="checkbox" id="ad-filter-switch"/><span class="slider round"></span></label>
+                    <span class="ml-3">Adblock mode</span>
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody>
+                            <tr>
+                                <td width="80%">Load advertisement from domains in our ad block list</td>
+                                <td width="20%" class="align-middle"><span id="desc_ad" class="badge badge-success">Allowed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>       
+        </div>
+    </div>
+
+</div>
+<!--Favorite color:-->
+<!--<select id="color">-->
     <!--<option value="red">red</option>-->
     <!--<option value="green">green</option>-->
     <!--<option value="blue">blue</option>-->
     <!--<option value="yellow">yellow</option>-->
-    <!--</select>-->
+<!--</select>-->
 
-    <!--<label>-->
+<!--<label>-->
     <!--<input type="checkbox" id="like">-->
     <!--I like colors.-->
-    <!--</label>-->
+<!--</label>-->
 
-    <!--<div id="status"></div>-->
-    <!--<button id="save">Save</button>-->
+<!--<div id="status"></div>-->
+<!--<button id="save">Save</button>-->
 
-    <script src="helpTextScript.js"></script>
-    <script src="options.js"></script>
-    <script src="options2.js"></script>
-    <script src="options3.js"></script>
+<script src="helpTextScript.js"></script>
+<script src="options.js"></script>
+<script src="options2.js"></script>
+<script src="options3.js"></script>
 </body>
-
 </html>
