@@ -1,9 +1,9 @@
 var whitelist = {};
 var blacklist = {};
 var blacktype = {};
-var easylist;
+var easylist = new Set();
 var strict_mode = false;
-var ad_filter = false;
+var ad_filter = true;
 
 chrome.runtime.onInstalled.addListener((details) => {
     var easyListUrl = chrome.runtime.getURL('adEasyList.txt');
@@ -80,6 +80,8 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 });
 
 function isAdURL(hostName) {
+    console.log(hostName);
+    // console.log("easylist set size:" + easylist.size);
     hostName = hostName.replace('www.', '');
     return easylist.has(hostName);
 }
@@ -90,6 +92,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
     var hostName = thisURL.host;
     // console.log("load resource type " + details.type + " from host: " + details.url);
 
+    // console.log("request from:" + details.tabId);
     if (ad_filter && isAdURL(hostName)) {
         return { cancel: true };
     } else {
