@@ -1,14 +1,18 @@
 var whitelist;
 var requests;
+var maliciousRecode;
 
 $("#btn_option").click((e) => {
     chrome.tabs.create({ 'url': 'chrome-extension://' + chrome.runtime.id + '/options.html' });
 })
 
-chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
+chrome.storage.sync.get(["whitelist", "blacklist", "maliciousRecode"], (result) => {
     whitelist = result.whitelist;
     blacklist = result.blacklist;
+    maliciousRecode = result.maliciousRecode;
+    if (Object.keys(maliciousRecode).length != 0) {
 
+    }
     chrome.storage.sync.get(["requests"], (result) => {
         requests = result.requests;
         var list_group = $("<ul></ul>");
@@ -74,4 +78,5 @@ chrome.storage.sync.get(["whitelist", "blacklist"], (result) => {
         }
         $("body").append(list_group);
     });
+
 });
