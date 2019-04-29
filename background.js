@@ -2,11 +2,14 @@ var whitelist = {};
 var blacklist = {};
 var blacktype = {};
 var easylist = new Set();
+var authorizedBlackList = new Set();
 var strict_mode = false;
 var ad_filter = true;
 
 chrome.runtime.onInstalled.addListener((details) => {
-    var easyListUrl = chrome.runtime.getURL('adEasyList.txt');
+    var easyListUrl = chrome.runtime.getURL("adEasyList.txt");
+
+
     fetch(easyListUrl)
         .then((response) => response.text())
         .then(content => {
@@ -17,7 +20,17 @@ chrome.runtime.onInstalled.addListener((details) => {
             chrome.storage.sync.set({ "whitelist": whitelist });
             chrome.storage.sync.set({ "blacklist": blacklist });
         });
+
 });
+
+// because this file might be big, we don't store it in storage service
+var authorizedBlackListUrl = chrome.runtime.getURL("processed-bad-domains.json");
+fetch(authorizedBlackListUrl)
+    .then((response) => (response.json()))
+    .then(content => {
+        authorizedBlackList = new Set(content);
+        console.log("initialize authorized blacklist, size:" + authorizedBlackList.size);
+    });
 
 chrome.storage.sync.get(["whitelist", "blacklist", "blacktype", "easylist", "strict_mode", "ad_filter"], (result) => {
     if (result.whitelist != undefined) {
