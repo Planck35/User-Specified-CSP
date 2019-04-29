@@ -8,7 +8,7 @@ for (var i = 0; i < types.length; i++) {
     var btn = $('<td><label class="switch"><input type="checkbox"/><span class="slider round"></span></label></td>');
     var info = $('<td class="align-middle"></td>');
     const btnName = "btn_help_"+i;
-    var questionMark = $("<td class=\"align-middle\"><button id=" + btnName + " class =\"help-icon btn-primary\">?</td>")
+    var questionMark = $("<td class=\"align-middle\"><button id=" + btnName + " class =\"help-icon btn-secondary\">?</td>")
     btn.find("input").attr("id", types[i] + "-checkbox");
     btn.find("input").attr("resource-type", types[i]);
 
@@ -26,9 +26,6 @@ for (var i = 0; i < types.length; i++) {
         $("#btn_showHelpModal").click();
     })
 }
-
-var save_btn = $('<tr><td><button id="save-type-setting" class="btn btn-outline-primary">Save</button></td><td></td></tr>');
-$("#resources").append(save_btn);
 
 chrome.storage.sync.get(["blacktype"], (result) => {
     blacktype = result.blacktype;
