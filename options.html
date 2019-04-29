@@ -75,6 +75,21 @@
 </nav>
 
 <div class="container">
+    <button type="button" class="btn D-n" data-toggle="modal" data-target="#modal_helpMessage" id="btn_showHelpModal">Open Patients Modal</button>
+    <div class="modal fade D-n" id="modal_helpMessage" role="dialog">
+        <div class="modal-dialog">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-body" style="text-align: center; margin: auto">
+                    <h2 id="modal-title-type-name"></h2>
+                    <p id="modal-text-help"></p>
+                </div>
+                <div class="modal-footer" style="text-align: center; margin: auto">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="tab-content mt-3">
         <div id = "pane_domain" class="box box-solid box-primary container tab-pane active" >
 
@@ -125,9 +140,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>        
+            </div>
             
         </div>
+<<<<<<< HEAD
 
         <div id="pane_mode" class="container tab-pane fade">
             <div class="card mt-3 options">
@@ -176,6 +192,10 @@
                 </div>
             </div>       
         </div>
+=======
+        
+        
+>>>>>>> a0227d16164ece46f74a9f39e0303e00c5fcb9fd
     </div>
 
 </div>
@@ -195,7 +215,7 @@
 <!--<div id="status"></div>-->
 <!--<button id="save">Save</button>-->
 
-
+<script src="helpTextScript.js"></script>
 <script src="options.js"></script>
 <script src="options2.js"></script>
 <script src="options3.js"></script>

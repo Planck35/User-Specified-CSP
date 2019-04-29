@@ -1,15 +1,38 @@
 var whitelist = {};
 var blacklist = {};
 var blacktype = {};
-
-whitelist[chrome.runtime.id] = true;
+var easylist = new Set();
+var authorizedBlackList = new Set();
+var strict_mode = false;
+var ad_filter = true;
 
 chrome.runtime.onInstalled.addListener((details) => {
-    chrome.storage.sync.set({ "whitelist": whitelist });
-    chrome.storage.sync.set({ "blacklist": blacklist });
+    var easyListUrl = chrome.runtime.getURL("adEasyList.txt");
+
+
+    fetch(easyListUrl)
+        .then((response) => response.text())
+        .then(content => {
+            var easyListArray = content.split("|");
+            easylist = new Set(easyListArray);
+            whitelist[chrome.runtime.id] = true;
+            chrome.storage.sync.set({ "easylist": easylist });
+            chrome.storage.sync.set({ "whitelist": whitelist });
+            chrome.storage.sync.set({ "blacklist": blacklist });
+        });
+
 });
 
-chrome.storage.sync.get(["whitelist", "blacklist", "blacktype"], (result) => {
+// because this file might be big, we don't store it in storage service
+var authorizedBlackListUrl = chrome.runtime.getURL("processed-bad-domains.json");
+fetch(authorizedBlackListUrl)
+    .then((response) => (response.json()))
+    .then(content => {
+        authorizedBlackList = new Set(content);
+        console.log("initialize authorized blacklist, size:" + authorizedBlackList.size);
+    });
+
+chrome.storage.sync.get(["whitelist", "blacklist", "blacktype", "easylist", "strict_mode", "ad_filter"], (result) => {
     if (result.whitelist != undefined) {
         whitelist = result.whitelist;
     }
@@ -19,14 +42,25 @@ chrome.storage.sync.get(["whitelist", "blacklist", "blacktype"], (result) => {
     if (result.blacktype != undefined) {
         blacktype = result.blacktype;
     }
+    if (result.easylist != undefined) {
+        easylist = result.easylist;
+    }
+    if (result.strict_mode != undefined) {
+        strict_mode = result.strict_mode;
+    }
+    if (result.ad_filter != undefined) {
+        ad_filter = result.ad_filter;
+    }
+    console.log("initial whitelist");
+    console.log(whitelist);
+    console.log("initial blacklist");
+    console.log(blacklist);
+    console.log("initial blacktype");
+    console.log(blacktype);
+    console.log("initial easylist");
+    console.log("easylist set size:" + easylist.size);
+    console.log("init strict mode:" + strict_mode + " ad_filter:" + ad_filter);
 });
-
-console.log("initial whitelist");
-console.log(whitelist);
-console.log("initial blacklist");
-console.log(blacklist);
-console.log("initial blacktype");
-console.log(blacktype);
 
 whitelist[chrome.runtime.id] = true;
 
@@ -46,8 +80,24 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
             blacktype = result.blacktype;
         });
     }
+    if (changes["strict_mode"] != undefined) {
+        chrome.storage.sync.get(["strict_mode"], (result) => {
+            strict_mode = result.strict_mode;
+        });
+    }
+    if (changes["ad_filter"] != undefined) {
+        chrome.storage.sync.get(["ad_filter"], (result) => {
+            ad_filter = result.ad_filter;
+        });
+    }
 });
 
+function isAdURL(hostName) {
+    console.log(hostName);
+    // console.log("easylist set size:" + easylist.size);
+    hostName = hostName.replace('www.', '');
+    return easylist.has(hostName);
+}
 
 chrome.webRequest.onBeforeRequest.addListener((details) => {
 
@@ -55,40 +105,45 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
     var hostName = thisURL.host;
     // console.log("load resource type " + details.type + " from host: " + details.url);
 
-    if (blacktype[details.type] == undefined || blacktype[details.type] == false) {
-
-    } else {
+    // console.log("request from:" + details.tabId);
+    if (ad_filter && isAdURL(hostName)) {
         return { cancel: true };
-    }
+    } else {
+        if (!(blacktype[details.type] == undefined || blacktype[details.type] == false)) {
+            // if details.type exist in the black type, thisbranch will be executed
+            return { cancel: true };
+        }
 
-    if (whitelist[hostName] == undefined && blacklist[hostName] == undefined) {
-        // console.log("blocking" + details.url);
-        chrome.storage.sync.get(["requests"], (result) => {
-            var requests;
-            if (result.requests == undefined) {
-                requests = {};
+        if (whitelist[hostName] == undefined && blacklist[hostName] == undefined) {
+            // new host
+            if (strict_mode) {
+                chrome.storage.sync.get(["requests"], (result) => {
+                    var requests;
+                    if (result.requests == undefined) {
+                        requests = {};
+                    } else {
+                        requests = result.requests;
+                    }
+                    if (requests[hostName] != true) {
+                        requests[hostName] = true;
+                        chrome.browserAction.setBadgeText({ text: Object.keys(requests).length.toString() });
+                        chrome.storage.sync.set({ "requests": requests });
+                    }
+                });
+                return { cancel: true };
             } else {
-                requests = result.requests;
+                return { cancel: false };
             }
-            if (requests[hostName] != true) {
-                requests[hostName] = true;
-                chrome.browserAction.setBadgeText({ text: Object.keys(requests).length.toString() });
-                chrome.storage.sync.set({ "requests": requests });
-            }
-
-        });
-
-        return { cancel: true };
-
-    } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
-        return { cancel: false };
-        // console.log("good to go" + details.url);
-    } else if (blacklist[hostName] != undefined && whitelist[hostName] == undefined) {
-        // console.log("Not good to go" + details.url);
-        return { cancel: true };
-    } else {
-        console.log("error: appear on both WL and BL")
-        return { cancel: true };
+        } else if (whitelist[hostName] != undefined && blacklist[hostName] == undefined) {
+            // exist in whitelist
+            return { cancel: false };
+        } else if (blacklist[hostName] != undefined && whitelist[hostName] == undefined) {
+            // exist in blacklist
+            return { cancel: true };
+        } else {
+            console.log("error: appear on both WL and BL")
+            return { cancel: true };
+        }
     }
 },
     { urls: ["<all_urls>"] },
