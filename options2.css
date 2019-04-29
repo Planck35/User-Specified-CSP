@@ -47,9 +47,9 @@
   }
 
   input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(32px);
+    -ms-transform: translateX(32px);
+    transform: translateX(32px);
   }
 
   /* Rounded sliders */
@@ -62,11 +62,16 @@
   }
 
   .options {
-    width: 1000px;
+    width: 90%;
     margin-left: auto;
     margin-right: auto
   }
 
+  .nav-pills > li > a {
+    color: white!important;
+    font-size: 16px;
+  }
+  
   .help-icon {
     width: 32px;
     height: 32px;
