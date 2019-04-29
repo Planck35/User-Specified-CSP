@@ -18,8 +18,7 @@
 <body>
 
 <nav class="navbar navbar-dark bg-dark">
-    
-    <div class="navbar-brand container">
+    <div class="navbar-brand container ml-0">
         <div class="row align-items-center">
             <div class="col">
                 <img width="60px" src="images/favicon.svg">
@@ -37,7 +36,23 @@
                 </div>
             </div>
         </div>
+
+        <ul class="nav nav-pills nav-justified flex-column flex-sm-row" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#pane_mode">Mode</a>
+            </li>
+        </ul>
+ 
     </div>
+
+    
+    
     <!--
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,32 +69,16 @@
         </ul>
     </div>
 -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
-        </li>
-    </ul>
+    
+    
 
 </nav>
 
 <div class="container">
-    <br>
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#pane_domain">Domain</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#pane_resource">Resource</a>
-        </li>
-    </ul>
-    <div class="tab-content">
+    <div class="tab-content mt-3">
         <div id = "pane_domain" class="box box-solid box-primary container tab-pane active" >
 
-            <div class="card mt-3">
+            <div class="card mt-3 options">
                 <div class="card-header">
                     Whitelist
                     <form id="form_addToWL" class="float-right">
@@ -97,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-3 options">
                 <div class="card-header">
                     Blacklist
                     <form id="form_addToBL" class="float-right">
@@ -129,6 +128,54 @@
             </div>        
             
         </div>
+
+        <div id="pane_mode" class="container tab-pane fade">
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    <label class="switch"><input type="checkbox" id="strict-mode-switch"/><span class="slider round"></span></label>
+                    <span class="ml-3">Strict mode</span>
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with whitelisted domains</td>
+                                <td width="20%" class="align-middle"><span class="badge badge-success">Allowed</span></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with unknown domains</td>
+                                <td width="20%" class="align-middle"><span id="desc_unknown" class="badge badge-warning">Ask you</span></td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td width="80%">Interact with blacklisted domains</td>
+                                <td width="20%" class="align-middle"><span class="badge badge-danger">Blocked</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+            
+            <div class="card mt-3 options">
+                <div class="card-header">
+                    <label class="switch"><input type="checkbox" id="ad-filter-switch"/><span class="slider round"></span></label>
+                    <span class="ml-3">Adblock mode</span>
+                </div>
+                <div class="card-body">
+                    <table class="table" >
+                        <tbody>
+                            <tr>
+                                <td width="80%">Load advertisement from domains in our ad block list</td>
+                                <td width="20%" class="align-middle"><span id="desc_ad" class="badge badge-success">Allowed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>       
+        </div>
     </div>
 
 </div>
@@ -151,5 +198,6 @@
 
 <script src="options.js"></script>
 <script src="options2.js"></script>
+<script src="options3.js"></script>
 </body>
 </html>
