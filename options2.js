@@ -1,5 +1,6 @@
 var blacktype;
-var types = ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"];
+var original_types = ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"];
+var types = ["Main Website", "Website as component hosted in main website", "Document of webpage styles; beautifier", "Script", "Image", "Font", "Elements from external sources", "Request", "Request (by hyperlink)", "Violation report", "Media", "Real-time communication tunnel", "other"];
 var typeText = []
 
 const helpTextScript = new HelpTextScript();
@@ -8,7 +9,7 @@ for (var i = 0; i < types.length; i++) {
     var btn = $('<td><label class="switch"><input type="checkbox"/><span class="slider round"></span></label></td>');
     var info = $('<td class="align-middle"></td>');
     const btnName = "btn_help_"+i;
-    var questionMark = $("<td class=\"align-middle\"><button id=" + btnName + " class =\"help-icon btn-secondary\">?</td>")
+    var questionMark = $("<td class=\"align-middle\"><button id=" + btnName + " class =\"help-icon btn-primary\">?</td>")
     btn.find("input").attr("id", types[i] + "-checkbox");
     btn.find("input").attr("resource-type", types[i]);
 
@@ -19,10 +20,12 @@ for (var i = 0; i < types.length; i++) {
     $("#resources").append(resource);
     const typeName = types[i]
     const textContent = helpTextScript.getHelpText(i)
+    const originalTypeNameText = "Technical name: "+ original_types[i]
     $("#"+btnName).on("click",(e)=>{
         // alert(typeName)
         $("#modal-title-type-name").text(typeName)
         $("#modal-text-help").text(textContent)
+        $("#modal-title-original-type-name").text(originalTypeNameText)
         $("#btn_showHelpModal").click();
     })
 }
