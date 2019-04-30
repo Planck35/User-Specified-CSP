@@ -65,6 +65,7 @@ chrome.storage.sync.get(["whitelist", "blacklist", "maliciousRecode"], (result) 
             request.addClass("list-group-item-action");
 
             var hostNameSpan = $("<div></div>");
+            hostNameSpan.css("font-size", "14px");
             hostNameSpan.text(key);
             hostNameSpan.addClass("col-8");
             requestDiv.append(hostNameSpan);
@@ -73,13 +74,16 @@ chrome.storage.sync.get(["whitelist", "blacklist", "maliciousRecode"], (result) 
             var btn_group = $("<div></div>");
             btn_group.addClass("btn-group");
             btn_group.addClass("col-4");
+            btn_group.addClass("pr-3");
 
-            var allow = $("<button>load</button>");
-            var disallow = $("<button>block</button>");
+            var allow = $("<button>Allow</button>");
+            var disallow = $("<button>Block</button>");
             allow.addClass("btn");
             allow.addClass("btn-outline-success");
+            allow.addClass("btn-sm");
             disallow.addClass("btn");
             disallow.addClass("btn-outline-danger");
+            disallow.addClass("btn-sm");
             allow.click(function () {
                 var request = $(this).parent();
                 request.parent().parent().hide();
