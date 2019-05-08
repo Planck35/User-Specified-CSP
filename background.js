@@ -6,7 +6,7 @@ var easylist = new Set();
 var maliciousRecode = {};
 var authorizedBlackList = new Set();
 var strict_mode = false;
-var ad_filter = true;
+var ad_filter = false;
 
 chrome.runtime.onInstalled.addListener((details) => {
     var easyListUrl = chrome.runtime.getURL("adEasyList.txt");

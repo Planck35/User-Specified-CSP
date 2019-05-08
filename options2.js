@@ -8,10 +8,10 @@ for (var i = 0; i < types.length; i++) {
     var resource = $("<tr></tr>");
     var btn = $('<td><label class="switch"><input type="checkbox"/><span class="slider round"></span></label></td>');
     var info = $('<td class="align-middle"></td>');
-    const btnName = "btn_help_"+i;
+    const btnName = "btn_help_" + i;
     var questionMark = $("<td class=\"align-middle\"><button id=" + btnName + " class =\"help-icon btn-primary\">?</td>")
-    btn.find("input").attr("id", types[i] + "-checkbox");
-    btn.find("input").attr("resource-type", types[i]);
+    btn.find("input").attr("id", original_types[i] + "-checkbox");
+    btn.find("input").attr("resource-type", original_types[i]);
 
     info.text(types[i]);
     resource.append(btn);
@@ -20,8 +20,8 @@ for (var i = 0; i < types.length; i++) {
     $("#resources").append(resource);
     const typeName = types[i]
     const textContent = helpTextScript.getHelpText(i)
-    const originalTypeNameText = "Technical name: "+ original_types[i]
-    $("#"+btnName).on("click",(e)=>{
+    const originalTypeNameText = "Technical name: " + original_types[i]
+    $("#" + btnName).on("click", (e) => {
         // alert(typeName)
         $("#modal-title-type-name").text(typeName)
         $("#modal-text-help").text(textContent)
@@ -31,29 +31,33 @@ for (var i = 0; i < types.length; i++) {
 }
 
 chrome.storage.sync.get(["blacktype"], (result) => {
+
     blacktype = result.blacktype;
-    console.log(blacktype);
+    // console.log(blacktype);
     if (blacktype == undefined) {
         blacktype = {};
     }
-
+    console.log("start!");
     for (var i = 0; i < types.length; i++) {
         if (types[i] in blacktype) {
-            $("#" + types[i] + "-checkbox").prop('checked', blacktype[types[i]]);
+            $("#" + original_types[i] + "-checkbox").prop('checked', blacktype[original_types[i]]);
         }
-        $("#" + types[i] + "-checkbox").click(function() {
+        console.log("triggered!");
+        $("#" + original_types[i] + "-checkbox").click(function () {
             if ($(this).is(":checked")) {
                 console.log($(this).attr("resource-type") + " checked");
                 blacktype[$(this).attr("resource-type")] = true;
-            } else  {
+            } else {
                 blacktype[$(this).attr("resource-type")] = false;
                 console.log($(this).attr("resource-type") + " unchecked");
             }
         })
     }
-    $("#save-type-setting").click(function() {
+    console.log("finish!");
+    $("#save-type-setting").click(function () {
+        console.log("triggered!");
         console.log(blacktype);
-        chrome.storage.sync.set({ "blacktype": blacktype }, function() {
+        chrome.storage.sync.set({ "blacktype": blacktype }, function () {
             alert("Your setting has been saved!");
             console.log(blacktype);
         });
