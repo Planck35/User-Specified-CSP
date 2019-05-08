@@ -6,7 +6,7 @@ var easylist = new Set();
 var maliciousRecode = {};
 var authorizedBlackList = new Set();
 var strict_mode = false;
-var ad_filter = false;
+var ad_filter = true;
 
 chrome.runtime.onInstalled.addListener((details) => {
     var easyListUrl = chrome.runtime.getURL("adEasyList.txt");
@@ -117,6 +117,20 @@ function isAdURL(hostName) {
     // console.log(hostName);
     // console.log("easylist set size:" + easylist.size);
     hostName = hostName.replace('www.', '');
+    do {
+        // console.log(hostName);
+        if (easylist.has(hostName)) {
+            return true;
+        } else {
+            if (hostName.indexOf(".") == -1) {
+                return easylist.has(hostName);
+            } else {
+                hostName = hostName.substring(hostName.indexOf(".") + 1);
+            }
+        }
+
+    } while (hostName.indexOf(".") != -1)
+    // return easylist.has(hostName);
     return easylist.has(hostName);
 }
 
@@ -125,7 +139,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
     var thisURL = new URL(details.url);
     var hostName = thisURL.host;
     var shortedHostName = hostName.replace('www.', '');
-    // console.log("load resource type " + details.type + " from host: " + details.url);
+    // console.log("load resource type " + details.type + " from url: " + details.url + " host is: " + hostName);
     if (authorizedBlackList.has(shortedHostName)) {
         if (maliciousRecode[details.tabId] == undefined) {
             maliciousRecode[details.tabId] = 1;
@@ -137,6 +151,7 @@ chrome.webRequest.onBeforeRequest.addListener((details) => {
     }
 
     if (ad_filter && isAdURL(hostName)) {
+        console.log("blocking " + hostName);
         return { cancel: true };
     } else {
         if (!(blacktype[details.type] == undefined || blacktype[details.type] == false)) {
